@@ -53,6 +53,72 @@ both, where the curves cross in Figure 2: $R_1 = R_2 = 40\ \Omega$.
 
 *Figure 2. $R_1$ vs. $R_2$ for the two requirements. The curves cross at the 40 Ω / 40 Ω design point, which is shown in the gray area of the left panel and in the zoomed panel on the right. Both curves have an asymptote as $R_2 \to \infty$, at $R_1 = (V_\mathrm{in} - V_\mathrm{out}) / i_3$: the blue curve approaches 140 Ω and the orange curve approaches 129.1 Ω.*
 
+## Solving for the design point
+
+The governing equation is nonlinear in $R_1$ and $R_2$, but it becomes linear if we
+write it in terms of the conductances $G_1 = 1/R_1$ and $G_2 = 1/R_2$:
+
+$$
+(V_\mathrm{in} - V_\mathrm{out})\, G_1 - V_\mathrm{out}\, G_2 = i_3
+$$
+
+Each design requirement supplies one ($V_\mathrm{out}$, $i_3$) pair, which gives two
+linear equations in two unknowns:
+
+$$
+\begin{aligned}
+(12 - 5)\, G_1 - 5\, G_2 &= 0.050 \\
+(12 - 4.9)\, G_1 - 4.9\, G_2 &= 0.055
+\end{aligned}
+\quad\Longrightarrow\quad
+\begin{aligned}
+7\, G_1 - 5\, G_2 &= 0.050 \\
+7.1\, G_1 - 4.9\, G_2 &= 0.055
+\end{aligned}
+$$
+
+Solve each equation for $G_1$:
+
+$$
+G_1 = \frac{0.050 + 5\, G_2}{7}
+\qquad\text{and}\qquad
+G_1 = \frac{0.055 + 4.9\, G_2}{7.1}
+$$
+
+Both expressions equal the same $G_1$, so set them equal to each other and
+cross-multiply:
+
+$$
+7.1\,(0.050 + 5\, G_2) = 7\,(0.055 + 4.9\, G_2)
+$$
+
+$$
+0.355 + 35.5\, G_2 = 0.385 + 34.3\, G_2
+$$
+
+$$
+1.2\, G_2 = 0.030
+\quad\Longrightarrow\quad
+G_2 = 0.025\ \mathrm{S}
+$$
+
+Substituting $G_2$ back into the first expression for $G_1$:
+
+$$
+G_1 = \frac{0.050 + 5\,(0.025)}{7} = \frac{0.175}{7} = 0.025\ \mathrm{S}
+$$
+
+so
+
+$$
+R_1 = \frac{1}{G_1} = 40\ \Omega, \qquad R_2 = \frac{1}{G_2} = 40\ \Omega
+$$
+
+As a check, the divider's output resistance is $R_1 \parallel R_2 = 20\ \Omega$, so a
+5 mA increase in load current should lower $V_\mathrm{out}$ by
+$20\ \Omega \times 5\ \mathrm{mA} = 0.1$ V, which is the sag from 5 V to 4.9 V allowed
+by the requirements.
+
 ## Power from the supply
 
 At the design point, for both load conditions:
